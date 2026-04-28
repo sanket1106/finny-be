@@ -1,0 +1,8 @@
+/Users/sanket/coding/finny-be/src/test/java/com/finny/FinnyApplicationTests.java
+/Users/sanket/coding/finny-be/src/test/java/com/finny/controller/AccountControllerTest.java
+/Users/sanket/coding/finny-be/src/test/java/com/finny/controller/AuthControllerTest.java
+/Users/sanket/coding/finny-be/src/test/java/com/finny/repository/AccountRepositoryTest.java
+/Users/sanket/coding/finny-be/src/test/java/com/finny/repository/CategoryRepositoryTest.java
+/Users/sanket/coding/finny-be/src/test/java/com/finny/repository/TransactionRepositoryTest.java
+/Users/sanket/coding/finny-be/src/test/java/com/finny/service/AccountServiceTest.java
+/Users/sanket/coding/finny-be/src/test/java/com/finny/service/AuthServiceTest.java

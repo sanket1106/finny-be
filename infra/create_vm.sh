@@ -1,0 +1,1 @@
+podman machine init --cpus 4 --memory 6144 --disk-size 100 finny-be
