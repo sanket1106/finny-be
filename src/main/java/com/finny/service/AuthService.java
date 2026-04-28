@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,11 +29,11 @@ public class AuthService {
 
     private final UserSessionRepository userSessionRepository;
 
-    public AuthService(UserRepository userRepository, 
-                       TenantRepository tenantRepository, 
-                       PasswordEncoder passwordEncoder,
-                       TenantProvisioningService tenantProvisioningService,
-                       UserSessionRepository userSessionRepository) {
+    public AuthService(UserRepository userRepository,
+            TenantRepository tenantRepository,
+            PasswordEncoder passwordEncoder,
+            TenantProvisioningService tenantProvisioningService,
+            UserSessionRepository userSessionRepository) {
         this.userRepository = userRepository;
         this.tenantRepository = tenantRepository;
         this.passwordEncoder = passwordEncoder;
@@ -50,25 +49,25 @@ public class AuthService {
 
         Tenant tenant;
         Optional<Tenant> existingTenant = tenantRepository.findById(request.getTenantId());
-        
+
         if (existingTenant.isPresent()) {
             tenant = existingTenant.get();
         } else {
             // Create new tenant
             tenant = new Tenant();
             tenant.setId(request.getTenantId());
-            
+
             String tenantName = request.getTenantName();
             if (tenantName == null || tenantName.isBlank()) {
                 tenantName = "Tenant-" + UUID.randomUUID().toString().substring(0, 8);
             }
             tenant.setName(tenantName);
-            
+
             String dbName = "finny_tenant_" + request.getTenantId().replace("-", "_");
             tenant.setDbName(dbName);
-            
+
             tenant = tenantRepository.save(tenant);
-            
+
             // Provision database
             tenantProvisioningService.provisionTenantDatabase(tenant.getDbName(), tenant.getId());
         }

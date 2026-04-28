@@ -1,6 +1,5 @@
 package com.finny.controller;
 
-import com.finny.domain.enums.AccountType;
 import com.finny.dto.CreateAccountRequest;
 import com.finny.service.AccountService;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,13 +37,13 @@ class AccountControllerTest {
         when(accountService.createAccount(any(CreateAccountRequest.class))).thenReturn("acc-123");
 
         String json = "{" +
-            "\"tenantId\":\"tenant-123\"," +
-            "\"userId\":\"user-123\"," +
-            "\"name\":\"My Checking\"," +
-            "\"type\":\"BANK\"," +
-            "\"currencyCode\":\"USD\"," +
-            "\"balance\":500.0" +
-        "}";
+                "\"tenantId\":\"tenant-123\"," +
+                "\"userId\":\"user-123\"," +
+                "\"name\":\"My Checking\"," +
+                "\"type\":\"BANK\"," +
+                "\"currencyCode\":\"USD\"," +
+                "\"balance\":500.0" +
+                "}";
 
         mockMvc.perform(post("/api/v1/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,16 +55,16 @@ class AccountControllerTest {
     @Test
     void testCreateAccount_ValidationError() throws Exception {
         when(accountService.createAccount(any(CreateAccountRequest.class)))
-            .thenThrow(new IllegalArgumentException("Invalid currency code: XYZ"));
+                .thenThrow(new IllegalArgumentException("Invalid currency code: XYZ"));
 
         String json = "{" +
-            "\"tenantId\":\"tenant-123\"," +
-            "\"userId\":\"user-123\"," +
-            "\"name\":\"My Checking\"," +
-            "\"type\":\"BANK\"," +
-            "\"currencyCode\":\"XYZ\"," +
-            "\"balance\":500.0" +
-        "}";
+                "\"tenantId\":\"tenant-123\"," +
+                "\"userId\":\"user-123\"," +
+                "\"name\":\"My Checking\"," +
+                "\"type\":\"BANK\"," +
+                "\"currencyCode\":\"XYZ\"," +
+                "\"balance\":500.0" +
+                "}";
 
         mockMvc.perform(post("/api/v1/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
