@@ -25,7 +25,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return path.startsWith("/api/v1/auth/");
+        return path.startsWith("/api/v1/auth/")
+                || path.startsWith("/swagger-ui")
+                || path.startsWith("/v3/api-docs")
+                || path.equals("/swagger-ui.html");
     }
 
     @Override
@@ -53,6 +56,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         try {
             // Set context for multitenancy resolving downstream
             UserContext.setCurrentUser(session.getUser().getId());
+            UserContext.setTenantId(session.getUser().getTenant().getId());
             filterChain.doFilter(request, response);
         } finally {
             UserContext.clear();

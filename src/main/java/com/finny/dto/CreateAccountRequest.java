@@ -12,8 +12,7 @@ import java.math.BigDecimal;
 @Setter
 public class CreateAccountRequest {
 
-    @NotBlank(message = "Tenant ID is required")
-    private String tenantId;
+
 
     @NotBlank(message = "User ID is required")
     private String userId;

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -38,6 +39,9 @@ public class MasterDatabaseConfig {
         return DataSourceBuilder.create().build();
     }
 
+    @Value("${spring.jpa.hibernate.ddl-auto:none}")
+    private String hbm2ddlAuto;
+
     @Primary
     @Bean(name = "masterEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean masterEntityManagerFactory(
@@ -49,7 +53,7 @@ public class MasterDatabaseConfig {
         em.setJpaVendorAdapter(masterJpaVendorAdapter());
         
         Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "none"); 
+        properties.put("hibernate.hbm2ddl.auto", hbm2ddlAuto); 
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         em.setJpaPropertyMap(properties);
         

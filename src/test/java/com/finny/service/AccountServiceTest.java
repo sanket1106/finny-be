@@ -37,7 +37,6 @@ class AccountServiceTest {
     @Test
     void testCreateAccount_Success() {
         CreateAccountRequest request = new CreateAccountRequest();
-        request.setTenantId("tenant-123");
         request.setUserId("user-123");
         request.setName("Savings");
         request.setType(AccountType.BANK);

@@ -23,8 +23,13 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authz -> authz
-                // Allow all requests for now to not break existing functionality
-                .anyRequest().permitAll()
+                .requestMatchers(
+                    "/api/v1/auth/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**"
+                ).permitAll()
+                .anyRequest().permitAll()  // All other routes pass through; auth is handled by AuthorizationFilter
             );
         return http.build();
     }

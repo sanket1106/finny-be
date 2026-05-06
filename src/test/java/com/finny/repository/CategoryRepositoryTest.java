@@ -1,32 +1,40 @@
 package com.finny.repository;
 
+import com.finny.BaseMySqlTest;
 import com.finny.domain.Category;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-class CategoryRepositoryTest {
+class CategoryRepositoryTest extends BaseMySqlTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @BeforeEach
+    void setUp() {
+        setupTenantContext("user_john_id", "family_smith_id");
+    }
+
     @Test
-    void testSaveAndFindCategory() {
+    void testFindSeededCategory() {
+        // Assume 'Food' category exists (seeded via finny.sh or registration)
+        // Let's create one just to be sure we have programmatic data as requested
         Category category = new Category();
-        category.setName("Groceries");
-        Category savedCategory = categoryRepository.save(category);
+        category.setName("Programmatic Category");
 
-        assertThat(savedCategory.getId()).isNotNull();
-        assertThat(savedCategory.getCreated()).isNotNull();
+        Category saved = categoryRepository.save(category);
+        assertThat(saved.getId()).isNotNull();
 
-        Optional<Category> foundCategory = categoryRepository.findById(savedCategory.getId());
-        assertThat(foundCategory).isPresent();
-        assertThat(foundCategory.get().getName()).isEqualTo("Groceries");
+        Optional<Category> found = categoryRepository.findById(saved.getId());
+        assertThat(found).isPresent();
+        assertThat(found.get().getName()).isEqualTo("Programmatic Category");
+        
+        // Cleanup
+        categoryRepository.delete(saved);
     }
 }

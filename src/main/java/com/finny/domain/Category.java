@@ -14,9 +14,6 @@ public class Category {
     @Column(columnDefinition = "varchar(36)")
     private String id = UUID.randomUUID().toString();
 
-    @Column(name = "tenant_id", nullable = false)
-    private String tenantId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
@@ -43,13 +40,7 @@ public class Category {
         this.id = id;
     }
 
-    public String getTenantId() {
-        return tenantId;
-    }
 
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
 
     public Category getParent() {
         return parent;

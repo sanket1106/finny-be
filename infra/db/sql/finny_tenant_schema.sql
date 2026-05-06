@@ -1,6 +1,5 @@
 CREATE TABLE `categories` (
     `id` varchar(36) NOT NULL,
-    `tenant_id` varchar(36) NOT NULL,
     `parent_id` varchar(36) DEFAULT NULL,
     `name` varchar(100) NOT NULL,
     `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -11,7 +10,6 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `accounts` (
     `id` varchar(36) NOT NULL,
-    `tenant_id` varchar(36) NOT NULL,
     `name` varchar(100) NOT NULL,
     `type` ENUM('CREDIT', 'BANK', 'LOAN', 'CASH', 'GIFT_CARD') NOT NULL,
     `currency` varchar(3) NOT NULL,
@@ -24,13 +22,13 @@ CREATE TABLE `accounts` (
 
 CREATE TABLE `transactions` (
     `id` varchar(36) NOT NULL,
-    `tenant_id` varchar(36) NOT NULL,
     `account_id` varchar(36) NOT NULL,
     `to_account_id` varchar(36) DEFAULT NULL,
     `category_id` varchar(36) DEFAULT NULL,
     `amount` decimal(19,4) NOT NULL,
     `type` ENUM('INCOME', 'SPENDING', 'TRANSFER') NOT NULL,
     `description` varchar(255),
+    `tags` varchar(255),
     `transaction_date` timestamp NOT NULL,
     `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated` timestamp,

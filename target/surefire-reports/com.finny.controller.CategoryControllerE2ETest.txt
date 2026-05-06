@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.finny.controller.CategoryControllerE2ETest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.378 s -- in com.finny.controller.CategoryControllerE2ETest

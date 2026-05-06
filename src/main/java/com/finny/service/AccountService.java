@@ -41,7 +41,6 @@ public class AccountService {
         }
 
         Account account = new Account();
-        account.setTenantId(request.getTenantId());
         account.setName(request.getName());
         account.setType(request.getType());
         account.setCurrency(request.getCurrencyCode());

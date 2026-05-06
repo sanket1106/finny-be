@@ -16,9 +16,6 @@ public class Transaction {
     @Column(columnDefinition = "varchar(36)")
     private String id = UUID.randomUUID().toString();
 
-    @Column(name = "tenant_id", nullable = false)
-    private String tenantId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
@@ -40,6 +37,9 @@ public class Transaction {
 
     private String description;
 
+    @Column
+    private String tags;
+
     @Column(nullable = false, name = "transaction_date")
     private LocalDateTime transactionDate = LocalDateTime.now();
 
@@ -58,14 +58,6 @@ public class Transaction {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
     }
 
     public Account getAccount() {
@@ -114,6 +106,14 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public LocalDateTime getTransactionDate() {

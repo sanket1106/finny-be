@@ -46,6 +46,7 @@ public class TenantProvisioningService {
 
         Map<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         // We don't want multitenancy for this specific setup connection
         emFactoryBean.setJpaPropertyMap(properties);
 
@@ -56,7 +57,7 @@ public class TenantProvisioningService {
             EntityManager em = emf.createEntityManager();
             try {
                 em.getTransaction().begin();
-                seedCategories(em, tenantId);
+                seedCategories(em);
                 em.getTransaction().commit();
             } catch (Exception e) {
                 em.getTransaction().rollback();
@@ -69,30 +70,29 @@ public class TenantProvisioningService {
         emFactoryBean.destroy();
     }
 
-    private void seedCategories(EntityManager em, String tenantId) {
+    private void seedCategories(EntityManager em) {
         // Income Categories
-        createCategory(em, tenantId, "Salary", null);
-        createCategory(em, tenantId, "Bonus", null);
-        createCategory(em, tenantId, "Interest", null);
-        createCategory(em, tenantId, "Dividends", null);
-        createCategory(em, tenantId, "Rental Income", null);
+        createCategory(em, "Salary", null);
+        createCategory(em, "Bonus", null);
+        createCategory(em, "Interest", null);
+        createCategory(em, "Dividends", null);
+        createCategory(em, "Rental Income", null);
 
         // Expense Categories
-        createCategory(em, tenantId, "Housing", null);
-        createCategory(em, tenantId, "Transportation", null);
-        createCategory(em, tenantId, "Food", null);
-        createCategory(em, tenantId, "Utilities", null);
-        createCategory(em, tenantId, "Insurance", null);
-        createCategory(em, tenantId, "Healthcare", null);
-        createCategory(em, tenantId, "Savings", null);
-        createCategory(em, tenantId, "Personal Spending", null);
-        createCategory(em, tenantId, "Entertainment", null);
-        createCategory(em, tenantId, "Education", null);
+        createCategory(em, "Housing", null);
+        createCategory(em, "Transportation", null);
+        createCategory(em, "Food", null);
+        createCategory(em, "Utilities", null);
+        createCategory(em, "Insurance", null);
+        createCategory(em, "Healthcare", null);
+        createCategory(em, "Savings", null);
+        createCategory(em, "Personal Spending", null);
+        createCategory(em, "Entertainment", null);
+        createCategory(em, "Education", null);
     }
 
-    private void createCategory(EntityManager em, String tenantId, String name, Category parent) {
+    private void createCategory(EntityManager em, String name, Category parent) {
         Category category = new Category();
-        category.setTenantId(tenantId);
         category.setName(name);
         category.setParent(parent);
         em.persist(category);
